@@ -48,6 +48,7 @@ function gun() {
 
 function controls() {
     window.addEventListener("keydown", function (e) {
+        //console.log(e)
         if (e.keyCode === 65) { 
             left = true
         }
