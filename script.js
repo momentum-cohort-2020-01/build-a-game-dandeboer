@@ -4,6 +4,7 @@ let screen = canvas.getContext("2d")
 let x = canvas.width / 2
 let y = canvas.height / 2
 let shoot = false
+let shootAgain = true
 let left
 let right
 let up
@@ -23,27 +24,29 @@ class Game {
     }
     tick = function tick() {
         //console.log("tick")
-        draw()
+        player()
         controls()
         gun()
         update()
         requestAnimationFrame(tick)
+        zombie()
     }
 }
 
-function draw() {
+function player() {
     screen.clearRect(x - 3, y - 3, 26, 26)
     screen.beginPath()
     screen.rect(x, y, 20, 20)
+    screen.fillStyle = "black"
     screen.fill()
     screen.closePath()
 }
 
 function gun() {
-    if (shoot === true) {
-        console.log("it shot")
+    if (shoot === true && shootAgain === true) {
+        console.log("bang")
+        shootAgain = false
     }
-    shoot = false
 }
 
 function controls() {
@@ -77,6 +80,10 @@ function controls() {
         if (e.keyCode === 83) { 
             down = false
         }
+        if (e.keyCode === 32) {
+            shoot = false
+            shootAgain = true
+        }
     })
 }
 
@@ -93,4 +100,13 @@ function update() {
     if (down === true) {
         y = y + 3
     }
+}
+
+function zombie() {
+    screen.clearRect(50, 50, 20, 20)
+    screen.beginPath()
+    screen.rect(50, 50, 20, 20)
+    screen.fillStyle = "#558000"
+    screen.fill()
+    screen.closePath()
 }
