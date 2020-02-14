@@ -9,6 +9,9 @@ let left
 let right
 let up
 let down
+let direction = "left"
+let bulletX
+let bulletY
 
 canvas.addEventListener("click", function () {
     if (gameLoaded === false) {
@@ -25,6 +28,7 @@ class Game {
     tick = function tick() {
         //console.log("tick")
         player()
+        hand()
         controls()
         gun()
         update()
@@ -34,34 +38,91 @@ class Game {
 }
 
 function player() {
-    screen.clearRect(x - 3, y - 3, 26, 26)
+    screen.clearRect(0, 0, canvas.width, canvas.height)
     screen.beginPath()
     screen.rect(x, y, 20, 20)
-    screen.fillStyle = "black"
+    screen.fillStyle = "#818181"
     screen.fill()
     screen.closePath()
 }
 
+function hand() {
+    if (direction === "left") {
+        screen.clearRect(0, 0, canvas.width, canvas.heigt)
+        screen.beginPath()
+        screen.rect(x-4, y+7, 6, 6)
+        screen.fillStyle = "black"
+        screen.fill()
+        screen.closePath()
+    }
+    if (direction === "right") {
+        screen.clearRect(0, 0, canvas.width, canvas.heigt)
+        screen.beginPath()
+        screen.rect(x+18, y+7, 6, 6)
+        screen.fillStyle = "black"
+        screen.fill()
+        screen.closePath()
+    }
+    if (direction === "up") {
+        screen.clearRect(0, 0, canvas.width, canvas.heigt)
+        screen.beginPath()
+        screen.rect(x+7, y-4, 6, 6)
+        screen.fillStyle = "black"
+        screen.fill()
+        screen.closePath()
+    }
+    if (direction === "down") {
+        screen.clearRect(0, 0, canvas.width, canvas.heigt)
+        screen.beginPath()
+        screen.rect(x+7, y+18, 6, 6)
+        screen.fillStyle = "black"
+        screen.fill()
+        screen.closePath()
+    }
+} 
+
 function gun() {
     if (shoot === true && shootAgain === true) {
         console.log("bang")
+        bullet()
         shootAgain = false
+    }
+}
+
+function bullet() {
+    bulletX = x
+    bulletY = y
+    if (direction === "left") {
+        console.log("bullet left")
+    }
+    if (direction === "right") {
+        console.log("bullet right")
+    }
+    if (direction === "up") {
+        console.log("bullet up")
+    }
+    if (direction === "down") {
+        console.log("bullet down")
     }
 }
 
 function controls() {
     window.addEventListener("keydown", function (e) {
-        if (e.keyCode === 65) { 
+        if (e.keyCode === 65) {
             left = true
+            direction = "left"
         }
-        if (e.keyCode === 68) { 
+        if (e.keyCode === 68) {
             right = true
+            direction = "right"
         }
-        if (e.keyCode === 87) { 
+        if (e.keyCode === 87) {
             up = true
+            direction = "up"
         }
-        if (e.keyCode === 83) { 
+        if (e.keyCode === 83) {
             down = true
+            direction = "down"
         }
         if (e.keyCode === 32) {
             shoot = true
@@ -71,13 +132,13 @@ function controls() {
         if (e.keyCode === 65) {
             left = false
         }
-        if (e.keyCode === 68) { 
+        if (e.keyCode === 68) {
             right = false
         }
-        if (e.keyCode === 87) { 
+        if (e.keyCode === 87) {
             up = false
         }
-        if (e.keyCode === 83) { 
+        if (e.keyCode === 83) {
             down = false
         }
         if (e.keyCode === 32) {
